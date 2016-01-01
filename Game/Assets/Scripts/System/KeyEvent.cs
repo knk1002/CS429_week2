@@ -16,22 +16,22 @@ namespace Assets.Scripts.System
             speed = original_Speed;
         }
 
-        public void KeyUpdate()
+        public void KeyUpdate(float deltaTime)
         {
             if (Input.GetKey("left"))
-                MoveLeft();
+                MoveLeft(deltaTime);
             else if (Input.GetKey("right"))
-                MoveRight();
+                MoveRight(deltaTime);
         }
 
-        public void MoveLeft()
+        public void MoveLeft(float deltaTime)
         {
-            cursor.transform.position.Set(cursor.transform.position.x - speed, cursor.transform.position.y, cursor.transform.position.z);
+            cursor.transform.Translate(-5*deltaTime, 0f, 0f);
         }
 
-        public void MoveRight()
+        public void MoveRight(float deltaTime)
         {
-            cursor.transform.position.Set(cursor.transform.position.x + speed, cursor.transform.position.y, cursor.transform.position.z);
+            cursor.transform.Translate(5*deltaTime, 0f, 0f);
         }
 
         GameObject cursor;

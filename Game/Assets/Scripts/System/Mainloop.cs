@@ -9,7 +9,7 @@ namespace Assets.Scripts.System
 {
     public class Mainloop : MonoBehaviour
     {
-        private GameObject myCursor;
+        public GameObject myCursor;
         private KeyEvent KeyboardInput; 
 
         void Start()
@@ -19,7 +19,7 @@ namespace Assets.Scripts.System
 
         void Update()
         {
-            KeyboardInput.KeyUpdate();
+            KeyboardInput.KeyUpdate(Time.deltaTime);
         }
     }
 }
