@@ -1,6 +1,8 @@
 from socket import*
 from select import*
 import sys
+import json
+import thread
 from time import ctime
 
 Host = ''
@@ -8,42 +10,25 @@ Port = 2345
 Bufsize = 1024
 ADDR = (Host,Port)
 
-serverSocket = socket(AF_INET,SOCK_STREAM)
+def ClientThread(clientsock,addr):
+    while True:
+        data = clientsock.recv(Bufsize)
+        print repr(addr) + ' ' + repr(data)
+    clientsock.close()
+    print repr(addr) + ' ' + "end connection"
 
-serverSocket.bind(ADDR)
+if __name__ == '__main__':
+    serverSocket = socket(AF_INET,SOCK_STREAM)
+    serverSocket.setsockopt(SOL_SOCKET,SO_REUSEADDR,1)
+    serverSocket.bind(ADDR)
 
-serverSocket.listen(10)
-connection_list = [serverSocket]
+    serverSocket.listen(5)
 
-print("Server Start")
+    print("Server Start")
 
-while connection_list:
-    try:
-        print("wait connection")
+    while 1:
+        print 'waiting for connection'
+        clientsock, addr = serverSocket.accept()
+        print 'connected from' , addr
+        thread.start_new_thread(ClientThread, (clientsock, addr))
 
-        read_socket, write_socket, error_socket = select(connection_list,[],[],10)
-
-        for sock in read_socket:
-            if sock == serverSocket:
-                clientSocket, addr_info = serverSocket.accept();
-                connection_list.append(clientSocket)
-                print("Client Connect" % (ctime(), addr_info[0]))
-
-                for socket_in_list in connection_list:
-                    if socket_in_list != serverSocket and socket_in_list != sock:
-                        try:
-                            socket_in_list.send("server respose")
-                        except Exception as e:
-                            socket_in_list.close()
-                            connection_list.remove(socket_in_list)
-            else:
-                data = sock.recv(Bufsize)
-                if data:
-                    print data
-                else:
-                    connection_list.remove(sock)
-                    sock.close()
-                    print("fail to continuous connection")
-    except KeyboardInterrupt:
-        serverSocket.close()
-        sys.exit()

@@ -3,27 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json.Serialization;
 
-namespace Assets.Scripts.Network
+[Serializable]
+public class NetworkMessage
 {
-    [Serializable]
-    public class NetworkMessage
+    public enum MessageType
     {
-        public enum MessageType
-        {
-            Connect
-        }
+        Connect
+    }
 
-        public int NetworkOrder;
-        public MessageType Type;
-        public Object[] Arguments;
+    public int NetworkOrder;
+    public MessageType Type;
+    public System.Object[] Arguments;
 
-        public NetworkMessage(MessageType type, Object[] arguments, int networkOrder = -1)
-        {
-            Type = type;
-            NetworkOrder = networkOrder;
-            Arguments = arguments;
-        }
+    public NetworkMessage(MessageType type, System.Object[] arguments, int networkOrder = -1)
+    {
+        Type = type;
+        NetworkOrder = networkOrder;
+        Arguments = arguments;
     }
 }

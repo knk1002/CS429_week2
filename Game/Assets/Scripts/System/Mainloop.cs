@@ -10,11 +10,39 @@ namespace Assets.Scripts.System
     public class Mainloop : MonoBehaviour
     {
         public GameObject myCursor;
-        private KeyEvent KeyboardInput; 
+        public GameObject ConnectButton;
+
+        private KeyEvent KeyboardInput;
+
+        NetworkClient ClientConnect;
+
+        bool isConnected;
 
         void Start()
         {
             KeyboardInput = new KeyEvent(myCursor);
+        }
+
+        public void ConnectButtonClick()
+        {
+            ClientConnect = new NetworkClient();
+            isConnected = ClientConnect.init();
+
+            if (isConnected)
+            {
+                StartCoroutine(Listen());
+            }
+        }
+
+        IEnumerator Listen()
+        {
+            while (true)
+            {
+                NetworkMessage message = null;
+            }
+
+            yield return null;
+
         }
 
         void Update()
