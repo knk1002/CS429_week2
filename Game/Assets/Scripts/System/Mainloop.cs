@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using Assets.Scripts.Stages;
 
 namespace Assets.Scripts.System
 {
@@ -19,6 +20,9 @@ namespace Assets.Scripts.System
         private KeyEvent KeyboardInput;
 		private BallEvent BallLogic;
 
+        private StageParser stageParser;
+        private Stage nowStage;
+
         NetworkClient ClientConnect;
 
         bool isConnected;
@@ -28,6 +32,8 @@ namespace Assets.Scripts.System
 			gameBounds = new GameBounds (-4, 4, 3, -3);
 			KeyboardInput = new KeyEvent(myCursor, gameBounds);
 			BallLogic = new BallEvent (Ball, gameBounds);
+            stageParser = StageParser.Instance;
+            nowStage = stageParser.getStage(1);
         }
 
         public void ConnectButtonClick()
