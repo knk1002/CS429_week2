@@ -27,9 +27,17 @@ namespace Assets.Scripts.System
 		public void update(float deltaTime) {
 			//Check for GameObject Collisions
 			if (ballCollisionDetector.state == State.Cursor) { //Colliding with a Cursor
+				//Handle Cursor Collision
 				velocityY *= -1;
+				//Reset State
+				ballCollisionDetector.state = State.None;
 			} else if (ballCollisionDetector.state == State.Brick) { // Colliding with a Brick
-				
+				//Handle Brick Collision
+				GameObject brick = ballCollisionDetector.collider.gameObject;
+
+				brick.GetComponent<BrickBehavior>().Die();
+				//Reset State
+				ballCollisionDetector.state = State.None;
 			}
 			//Check for out of bounds
 			if (ball.transform.position.x - radius < gameBounds.leftBound

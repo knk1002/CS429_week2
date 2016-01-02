@@ -11,7 +11,7 @@ namespace Assets.Scripts.System
     public class Mainloop : MonoBehaviour
     {
         public GameObject myCursor;
-		//public GameObject opCursor;
+		public GameObject opCursor;
         public GameObject ConnectButton;
 		public GameObject Ball;
 
@@ -25,6 +25,10 @@ namespace Assets.Scripts.System
 
         void Start()
         {
+			myCursor.transform.position.Set (0f, -2.75f, 0f);
+			opCursor.transform.position.Set (0f, 2.75f, 0f);
+			Ball.transform.position.Set (0f, -2f, 0f);
+
 			gameBounds = new GameBounds (-4, 4, 3, -3);
 			KeyboardInput = new KeyEvent(myCursor, gameBounds);
 			BallLogic = new BallEvent (Ball, gameBounds);
