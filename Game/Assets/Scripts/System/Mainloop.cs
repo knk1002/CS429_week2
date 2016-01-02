@@ -60,7 +60,7 @@ namespace Assets.Scripts.System
             }
         }
 
-        void Update()
+        void FixedUpdate()
         {
             KeyboardInput.KeyUpdate(Time.deltaTime);
 			BallLogic.update (Time.deltaTime);
