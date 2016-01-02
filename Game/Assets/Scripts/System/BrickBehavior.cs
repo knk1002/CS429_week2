@@ -14,7 +14,13 @@ public class BrickBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (numHits >= maxHits) {
+			Die ();
+		}
+	}
+
+	public void Hit() {
+		numHits++;
 	}
 
 	public void Die() {

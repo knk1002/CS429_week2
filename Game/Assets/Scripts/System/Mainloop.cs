@@ -15,6 +15,8 @@ namespace Assets.Scripts.System
         public GameObject ConnectButton;
 		public GameObject Ball;
 
+		public GameObject brick;
+
 		private GameBounds gameBounds;
         private KeyEvent KeyboardInput;
 		private BallEvent BallLogic;
@@ -25,10 +27,15 @@ namespace Assets.Scripts.System
 
         void Start()
         {
+			//Position the Objects
 			myCursor.transform.position.Set (0f, -2.75f, 0f);
 			opCursor.transform.position.Set (0f, 2.75f, 0f);
 			Ball.transform.position.Set (0f, -2f, 0f);
 
+			//Load Level
+			LoadLevel();
+
+			//Instantiate Game Logic
 			gameBounds = new GameBounds (-4, 4, 3, -3);
 			KeyboardInput = new KeyEvent(myCursor, gameBounds);
 			BallLogic = new BallEvent (Ball, gameBounds);
@@ -69,5 +76,15 @@ namespace Assets.Scripts.System
             KeyboardInput.KeyUpdate(Time.deltaTime);
 			BallLogic.update (Time.deltaTime);
         }
+
+		void LoadLevel() {
+			for (int x = 0; x < 12; x++) {
+				for (int y = 0; y < 8; y++) {
+					float xpos = (float)x / 2 - 3;
+					float ypos = (float)y / 4 - 1;
+					Instantiate (brick, new Vector3 (xpos, ypos, 0), Quaternion.identity);
+				}
+			}
+		}
     }
 }

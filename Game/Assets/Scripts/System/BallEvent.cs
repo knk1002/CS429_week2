@@ -35,16 +35,22 @@ namespace Assets.Scripts.System
 				//Handle Brick Collision
 				GameObject brick = ballCollisionDetector.collider.gameObject;
 
-				brick.GetComponent<BrickBehavior>().Die();
+				brick.GetComponent<BrickBehavior>().Hit();
 				//Reset State
 				ballCollisionDetector.state = State.None;
 			}
 			//Check for out of bounds
 			if (ball.transform.position.x - radius < gameBounds.leftBound
-			    || ball.transform.position.x + radius > gameBounds.rightBound) {
+			    && velocityX < 0) {
+				velocityX *= -1;
+			} else if (ball.transform.position.x + radius > gameBounds.rightBound
+			           && velocityX > 0) {
 				velocityX *= -1;
 			} else if (ball.transform.position.y - radius < gameBounds.lowerBound
-			           || ball.transform.position.y + radius > gameBounds.upperBound) {
+			           && velocityY < 0) {
+				velocityY *= -1;
+			} else if (ball.transform.position.y + radius > gameBounds.upperBound 
+				&& velocityY > 0) {
 				velocityY *= -1;
 			}
 			//Move the ball
