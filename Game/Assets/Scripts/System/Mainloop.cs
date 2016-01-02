@@ -15,6 +15,7 @@ namespace Assets.Scripts.System
         public GameObject ConnectButton;
 		public GameObject Ball;
 
+		private GameBounds gameBounds;
         private KeyEvent KeyboardInput;
 		private BallEvent BallLogic;
 
@@ -24,8 +25,9 @@ namespace Assets.Scripts.System
 
         void Start()
         {
-            KeyboardInput = new KeyEvent(myCursor);
-			BallLogic = new BallEvent (Ball);
+			gameBounds = new GameBounds (-4, 4, 3, -3);
+			KeyboardInput = new KeyEvent(myCursor, gameBounds);
+			BallLogic = new BallEvent (Ball, gameBounds);
         }
 
         public void ConnectButtonClick()

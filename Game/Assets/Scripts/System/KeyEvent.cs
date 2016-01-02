@@ -9,9 +9,11 @@ namespace Assets.Scripts.System
     public class KeyEvent
     {
         
-        public KeyEvent(GameObject input)
+		public KeyEvent(GameObject input, GameBounds gb)
         {
             cursor = input;
+			gameBounds = gb;
+
             original_Speed = 1;
             speed = original_Speed;
         }
@@ -26,7 +28,8 @@ namespace Assets.Scripts.System
 
         public void MoveLeft(float deltaTime)
         {
-            cursor.transform.Translate(-5*deltaTime, 0f, 0f);
+            
+			cursor.transform.Translate(-5*deltaTime, 0f, 0f);
         }
 
         public void MoveRight(float deltaTime)
@@ -35,6 +38,7 @@ namespace Assets.Scripts.System
         }
 
         GameObject cursor;
+		GameBounds gameBounds;
         float original_Speed;
         float speed;
 

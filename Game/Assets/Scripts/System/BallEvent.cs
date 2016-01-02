@@ -6,13 +6,17 @@ namespace Assets.Scripts.System
 	public class BallEvent
 	{
 		GameObject ball;
+		GameBounds gameBounds;
+
 		float velocityX;
 		float velocityY;
 		BallCollisionDetector ballCollisionDetector;
 
-		public BallEvent (GameObject input)
+		public BallEvent (GameObject input, GameBounds gb)
 		{
 			ball = input;
+			gameBounds = gb;
+
 			velocityX = 2;
 			velocityY = 4;
 			ballCollisionDetector = ball.GetComponent<BallCollisionDetector> ();
