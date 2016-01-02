@@ -10,9 +10,12 @@ namespace Assets.Scripts.System
     public class Mainloop : MonoBehaviour
     {
         public GameObject myCursor;
+		//public GameObject opCursor;
         public GameObject ConnectButton;
+		public GameObject Ball;
 
         private KeyEvent KeyboardInput;
+		private BallEvent BallLogic;
 
         NetworkClient ClientConnect;
 
@@ -21,6 +24,7 @@ namespace Assets.Scripts.System
         void Start()
         {
             KeyboardInput = new KeyEvent(myCursor);
+			BallLogic = new BallEvent (Ball);
         }
 
         public void ConnectButtonClick()
@@ -48,6 +52,7 @@ namespace Assets.Scripts.System
         void Update()
         {
             KeyboardInput.KeyUpdate(Time.deltaTime);
+			BallLogic.update (Time.deltaTime);
         }
     }
 }
