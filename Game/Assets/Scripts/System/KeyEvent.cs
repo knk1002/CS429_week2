@@ -28,14 +28,14 @@ namespace Assets.Scripts.System
 
         public void MoveLeft(float deltaTime)
         {
-			if (cursor.transform.position.x > -4) {
+			if (cursor.transform.position.x - 0.4 > gameBounds.leftBound) {
 				cursor.transform.Translate (-5 * deltaTime, 0f, 0f);
 			}
         }
 
         public void MoveRight(float deltaTime)
         {
-			if (cursor.transform.position.x < 4) {
+			if (cursor.transform.position.x + 0.4 < gameBounds.rightBound) {
 				cursor.transform.Translate (5 * deltaTime, 0f, 0f);
 			}
         }

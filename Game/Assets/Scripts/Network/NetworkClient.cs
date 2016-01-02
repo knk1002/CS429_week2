@@ -13,7 +13,7 @@ public class NetworkClient {
     {
         try
         {
-            Client_Socket = new TcpClient("localhost", 2345);
+            Client_Socket = new TcpClient("143.248.36.223", 2345);
         }
         catch
         {

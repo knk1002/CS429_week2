@@ -17,6 +17,23 @@ def ClientThread(clientsock,addr):
     clientsock.close()
     print repr(addr) + ' ' + "end connection"
 
+def readConfig(name):
+    f = open(name,'r')
+    js = json.load(f.read())
+    f.close()
+    return js
+
+def JSONread(msg):
+    CONFIG = {}
+    CONFIG = readConfig(json.load(msg))
+
+
+
+# def _JSON():
+
+
+
+
 if __name__ == '__main__':
     serverSocket = socket(AF_INET,SOCK_STREAM)
     serverSocket.setsockopt(SOL_SOCKET,SO_REUSEADDR,1)
