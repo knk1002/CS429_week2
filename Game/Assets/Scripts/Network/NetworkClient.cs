@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Net.Sockets;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 public class NetworkClient {
 
@@ -31,8 +32,18 @@ public class NetworkClient {
         return true;
     }
 
-    public void SendtoServer()
+    public void SendtoServer(NetworkMessage message)
     {
+        JsonSerializer serializer = new JsonSerializer();
+        try
+        {
+            serializer.Serialize(streamWriter, message);
+            streamWriter.Flush();
+        }
+        catch
+        {
+            Debug.Log("Message Send Failed");
+        }
 
     }
 }

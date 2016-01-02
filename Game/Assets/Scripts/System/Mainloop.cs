@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Assets.Scripts.System
 {
@@ -34,7 +35,9 @@ namespace Assets.Scripts.System
 
             if (isConnected)
             {
+                ConnectButton.SetActive(false);
                 StartCoroutine(Listen());
+                Debug.Log("Waiting for opponent");
             }
         }
 
@@ -43,10 +46,16 @@ namespace Assets.Scripts.System
             while (true)
             {
                 NetworkMessage message = null;
+                JsonSerializer serializer = new JsonSerializer();
+
+                if (ClientConnect.netStream.DataAvailable)
+                {
+                    message = serializer.Deserialize<NetworkMessage>(new JsonTextReader(ClientConnect.streamReader));
+                    Debug.Log("Got a message... " + message.ToString());
+                }
+
+                yield return null;
             }
-
-            yield return null;
-
         }
 
         void Update()
