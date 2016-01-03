@@ -38,18 +38,21 @@ namespace Assets.Scripts.System
 				Vector2 side = ballCollisionDetector.collider.contacts [0].normal;
 				float angle = Vector2.Angle (side, Vector2.right);
 				//Debug.Log (angle);
-				if (Mathf.Approximately (angle, 90)) { // front
+				if (angle >= 45 && angle <= 135) { // front or back
 					velocityY *= -1;
-				} else if (Mathf.Approximately (angle, 180)) { // left
+				} else if (angle > 135) { // left
 					velocityX *= -1;
-				} else if (Mathf.Approximately (angle, 0)) { //right
+				} else if (angle < 45) { //right
 					velocityX *= -1;
-				} else {
+				} 
+				/*
+				else {
 					Vector2 newVelocity = 
 						Vector2.Reflect (new Vector2 (velocityX, velocityY), side.normalized);
 					velocityX = newVelocity.x;
 					velocityY = newVelocity.y;
 				}
+				*/
 				brick.GetComponent<BrickBehavior>().Hit();
 				//Reset State
 				ballCollisionDetector.state = State.None;
