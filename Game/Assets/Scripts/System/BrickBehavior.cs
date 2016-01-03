@@ -4,12 +4,11 @@ using System.Collections;
 public class BrickBehavior : MonoBehaviour {
 
 	int numHits;
-	int maxHits;
+	public int maxHits;
 
 	// Use this for initialization
 	void Start () {
 		numHits = 0;
-		maxHits = 1;
 	}
 	
 	// Update is called once per frame
@@ -21,6 +20,15 @@ public class BrickBehavior : MonoBehaviour {
 
 	public void Hit() {
 		numHits++;
+		if (maxHits - numHits == 1) {
+			GetComponent<SpriteRenderer> ().color = Color.red;
+		}
+		if (maxHits - numHits == 2) {
+			GetComponent<SpriteRenderer> ().color = Color.yellow;
+		}
+		if (maxHits - numHits == 3) {
+			GetComponent<SpriteRenderer> ().color = Color.blue;
+		}
 	}
 
 	public void Die() {

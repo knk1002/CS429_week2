@@ -6,7 +6,7 @@ namespace Assets.Scripts.System {
 	public class BallCollisionDetector : MonoBehaviour {
 
 		public State state;
-		public Collider2D collider;
+		public Collision2D collider;
 
 		// Use this for initialization
 		void Start () {
@@ -18,7 +18,7 @@ namespace Assets.Scripts.System {
 			
 		}
 
-		void OnTriggerEnter2D (Collider2D col) {
+		void OnCollisionEnter2D (Collision2D col) {
 			if (col.gameObject.tag == "Cursor") {
 				state = State.Cursor;
 				//Do Something
@@ -33,7 +33,7 @@ namespace Assets.Scripts.System {
 			collider = col;
 		}
 
-		void OnTriggerExit2D (Collider2D col) {
+		void OnCollisionExit2D (Collision2D col) {
 			state = State.None;
 			Debug.Log("Out of Collision");
 		}

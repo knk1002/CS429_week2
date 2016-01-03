@@ -17,6 +17,7 @@ namespace Assets.Scripts.System
 		public GameObject Ball;
 
 		public GameObject brick;
+		public GameObject brick2;
 
 		private GameBounds gameBounds;
         private KeyEvent KeyboardInput;
@@ -88,7 +89,11 @@ namespace Assets.Scripts.System
 				for (int y = 0; y < 8; y++) {
 					float xpos = (float)x / 2 - 3;
 					float ypos = (float)y / 4 - 1;
-					Instantiate (brick, new Vector3 (xpos, ypos, 0), Quaternion.identity);
+					if (y % 2 == 0) {
+						Instantiate (brick, new Vector3 (xpos, ypos, 0), Quaternion.identity);
+					} else {
+						Instantiate (brick2, new Vector3 (xpos, ypos, 0), Quaternion.identity);
+					}
 				}
 			}
 		}
