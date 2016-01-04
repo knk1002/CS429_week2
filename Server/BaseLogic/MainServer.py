@@ -15,6 +15,12 @@ ADDR = (Host,Port)
 player_pair_list = []
 
 class client_sock:
+    def __init__(self):
+        self.first = None
+        self.second = None
+        self.roomnumber = 0
+        self.firstload = False
+        self.secondload = False
     def set_1P(self, client_socket1, num):
         self.first = client_socket1
         self.roomnumber = num
@@ -73,8 +79,8 @@ if __name__ == '__main__':
     room_num = 1
     while 1:
         print 'waiting for connection'
+        client_list = client_sock()
         for i in range(2):
-            client_list = client_sock()
             clientsock, addr = serverSocket.accept()
             if i==0:
                 room_num += 1
@@ -86,7 +92,7 @@ if __name__ == '__main__':
                 player_pair_list.append(client_list)
                 net_order = 2
                 clientsock.send(_Serializer("PlayerOrder",[net_order],-1))
-                client_list.first.send(_Serializer("Connect",'',-1))
-                client_list.second.send(_Serializer("Connect",'',-1))
+                client_list.first.send(_Serializer("Connect",[],-1))
+                client_list.second.send(_Serializer("Connect",[],-1))
             print 'connected from' , addr
             thread.start_new_thread(ClientThread, (clientsock, addr,room_num,net_order))

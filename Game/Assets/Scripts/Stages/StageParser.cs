@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine;
 
 namespace Assets.Scripts.Stages
 {
@@ -21,17 +22,10 @@ namespace Assets.Scripts.Stages
 
         public Stage getStage(int num)
         {
-            
-            string path = "Assets/Resources/Stages/" + num.ToString() + ".json";
+            Stage stage = null;
+            TextAsset targetFile = (TextAsset)Resources.Load(num.ToString());
 
-            Stage stage;
-
-            using (StreamReader file = File.OpenText(path))
-            {
-                stage = (Stage)serializer.Deserialize(file, typeof(Stage));
-            }
-
-			UnityEngine.Debug.Log (stage.blockInfoList.Count);
+            stage = JsonConvert.DeserializeObject<Stage>(targetFile.text);
 
             return stage;
         }

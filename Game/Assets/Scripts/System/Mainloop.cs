@@ -49,6 +49,8 @@ namespace Assets.Scripts.System
             stageParser = StageParser.Instance;
             nowStage = stageParser.getStage(1);
             LoadLevel();
+
+            gameState = GameState.Playing;
         }
 
         public void ConnectButtonClick()
@@ -95,13 +97,17 @@ namespace Assets.Scripts.System
 			}
         }
 
+        void Update()
+        {
+            FixedUpdate();
+        }
+
 		void LoadLevel() {
-
-            foreach (Assets.Scripts.Stages.Stage.BlockInfo b in nowStage.blockInfoList)
+            for(int i = 0; i < nowStage.blockInfoList.Count; i++)
             {
-                GameObject Temp = (GameObject)Instantiate(brick, new Vector3(b.point.x, b.point.y, 0), Quaternion.identity);
+                GameObject Temp = (GameObject)Instantiate(brick, new Vector3(nowStage.blockInfoList[i].point.x, nowStage.blockInfoList[i].point.y, 0), Quaternion.identity);
 
-                switch (b.maxHit)
+                switch (nowStage.blockInfoList[i].maxHit)
                 {
                     case 1:
                         Temp.GetComponent<SpriteRenderer>().color = Color.red;
