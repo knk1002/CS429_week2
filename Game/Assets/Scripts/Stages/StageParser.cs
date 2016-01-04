@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System;
 using System.IO;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace Assets.Scripts.Stages
 {
@@ -22,11 +24,12 @@ namespace Assets.Scripts.Stages
             Stage stage;
             string path = "Assets/Resources/Stages/" + num.ToString() + ".json";
             
-            Debug.Assert(File.Exists(path));
             using (StreamReader file = File.OpenText(path))
             {
                 stage = (Stage)serializer.Deserialize(file, typeof(Stage));
             }
+
+			UnityEngine.Debug.Log (stage.blockInfoList [0].blockType);
 
             return stage;
         }

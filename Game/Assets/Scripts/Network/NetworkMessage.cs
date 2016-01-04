@@ -5,7 +5,12 @@ public class NetworkMessage
 {
     public enum MessageType
     {
-        Connect
+		PlayerOrder,
+        Connect,
+		Load,
+		Start,
+		MoveStart,
+		MoveEnd
     }
 
     public int NetworkOrder;

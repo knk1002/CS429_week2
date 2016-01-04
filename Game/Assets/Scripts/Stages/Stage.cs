@@ -10,31 +10,16 @@ namespace Assets.Scripts.Stages
     {
         public class BlockInfo
         {
-            enum BlockType
+            public enum BlockType
             {
                 Normal,
             }
 
-            public Vector2 Point
-            {
-                get
-                {
-                    return point;
-                }
-            }
-
-            Vector2 point;
-            Vector2 size;
+			public BlockType blockType;
+            public Vector2 point;
+            public Vector2 size;
         }
 
-        List<BlockInfo> blockInfoList;
-        public List<BlockInfo> BlockInfoList
-        {
-            get
-            {
-                return blockInfoList;
-            }
-        }
-        
+        public List<BlockInfo> blockInfoList;
     }
 }
