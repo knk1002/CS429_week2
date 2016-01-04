@@ -43,9 +43,16 @@ namespace Assets.Scripts.System
             KeyboardInput = new KeyEvent(myCursor, gameBounds);
             BallLogic = new BallEvent(Ball, gameBounds);
 
+<<<<<<< HEAD
             //Load Level
+=======
+			//Instantiate Game Logic
+			gameBounds = new GameBounds (-4f, 4f, 2.4f, -2.4f);
+			KeyboardInput = new KeyEvent(myCursor, gameBounds);
+			BallLogic = new BallEvent (Ball, gameBounds);
 			gameState = GameState.Start;
 
+>>>>>>> 19038bac9c32d77d7440a32cedd3cfd3b5554676
             stageParser = StageParser.Instance;
             nowStage = stageParser.getStage(1);
             LoadLevel();
@@ -96,6 +103,7 @@ namespace Assets.Scripts.System
         }
 
 		void LoadLevel() {
+<<<<<<< HEAD
 
             foreach (Assets.Scripts.Stages.Stage.BlockInfo b in nowStage.blockInfoList)
             {
@@ -121,5 +129,19 @@ namespace Assets.Scripts.System
                 }
             }
         }
+=======
+			for (int x = 0; x < 12; x++) {
+				for (int y = 0; y < 5; y++) {
+					float xpos = (float)x / 2 - 3f;
+					float ypos = (float)y / 4 - 0.5f;
+					if (y % 2 == 0) {
+						Instantiate (brick, new Vector3 (xpos, ypos, 0), Quaternion.identity);
+					} else {
+						Instantiate (brick2, new Vector3 (xpos, ypos, 0), Quaternion.identity);
+					}
+				}
+			}
+		}
+>>>>>>> 19038bac9c32d77d7440a32cedd3cfd3b5554676
     }
 }
