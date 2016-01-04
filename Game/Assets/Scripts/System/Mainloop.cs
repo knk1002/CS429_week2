@@ -11,6 +11,7 @@ namespace Assets.Scripts.System
 {
     public class Mainloop : MonoBehaviour
     {
+        public int networkOrder;
         public GameObject myCursor;
 		public GameObject opCursor;
         public GameObject ConnectButton;
@@ -33,6 +34,8 @@ namespace Assets.Scripts.System
 
         void Start()
         {
+            networkOrder = -1;
+
 			//Position the Objects
 			myCursor.transform.position.Set (0f, -2.2f, 0f);
 			opCursor.transform.position.Set (0f, 2.2f, 0f);
@@ -47,10 +50,6 @@ namespace Assets.Scripts.System
 			gameState = GameState.Start;
 
             stageParser = StageParser.Instance;
-            nowStage = stageParser.getStage(1);
-            LoadLevel();
-
-            gameState = GameState.Playing;
         }
 
         public void ConnectButtonClick()
@@ -77,6 +76,26 @@ namespace Assets.Scripts.System
                 {
                     message = serializer.Deserialize<NetworkMessage>(new JsonTextReader(ClientConnect.streamReader));
                     Debug.Log("Got a message... " + message.ToString());
+                }
+
+                if (message != null)
+                {
+                    switch (message.Type)
+                    {
+                        case NetworkMessage.MessageType.PlayerOrder:
+                            networkOrder = Convert.ToInt32(message.Arguments[0]);
+                            break;
+                        case NetworkMessage.MessageType.Connect:
+                            nowStage = stageParser.getStage(1);
+                            LoadLevel();
+                            break;
+                        case NetworkMessage.MessageType.Start:
+                            gameState = GameState.Playing;
+                            break;
+                        default:
+                            break;
+
+                    }
                 }
 
                 yield return null;
@@ -125,6 +144,10 @@ namespace Assets.Scripts.System
                         break;
 
                 }
+            }
+            if(isConnected)
+            {
+                ClientConnect.SendLoad(networkOrder);
             }
         }
     }
