@@ -37,15 +37,15 @@ namespace Assets.Scripts.System
 			opCursor.transform.position.Set (0f, 2.2f, 0f);
 			Ball.transform.position.Set (0f, -1.8f, 0f);
 
-			//Load Level
-			LoadLevel();
+            //Instantiate Game Logic
+            gameBounds = new GameBounds(-4f, 4f, 2.4f, -2.4f);
+            KeyboardInput = new KeyEvent(myCursor, gameBounds);
+            BallLogic = new BallEvent(Ball, gameBounds);
 
-			//Instantiate Game Logic
-			gameBounds = new GameBounds (-4f, 4f, 2.4f, -2.4f);
-			KeyboardInput = new KeyEvent(myCursor, gameBounds);
-			BallLogic = new BallEvent (Ball, gameBounds);
+            //Load Level
             stageParser = StageParser.Instance;
             nowStage = stageParser.getStage(1);
+            LoadLevel();
         }
 
         public void ConnectButtonClick()
@@ -85,17 +85,30 @@ namespace Assets.Scripts.System
         }
 
 		void LoadLevel() {
-			for (int x = 0; x < 12; x++) {
-				for (int y = 0; y < 4; y++) {
-					float xpos = (float)x / 2 - 3f;
-					float ypos = (float)y / 4 - 0.5f;
-					if (y % 2 == 0) {
-						Instantiate (brick, new Vector3 (xpos, ypos, 0), Quaternion.identity);
-					} else {
-						Instantiate (brick2, new Vector3 (xpos, ypos, 0), Quaternion.identity);
-					}
-				}
-			}
-		}
+
+            foreach (Assets.Scripts.Stages.Stage.BlockInfo b in nowStage.blockInfoList)
+            {
+                GameObject Temp = (GameObject)Instantiate(brick, new Vector3(b.point.x, b.point.y, 0), Quaternion.identity);
+
+                switch (b.maxHit)
+                {
+                    case 1:
+                        Temp.GetComponent<SpriteRenderer>().color = Color.red;
+                        Temp.GetComponent<BrickBehavior>().maxHits = 1;
+                        break;
+                    case 2:
+                        Temp.GetComponent<SpriteRenderer>().color = Color.yellow;
+                        Temp.GetComponent<BrickBehavior>().maxHits = 2;
+                        break;
+                    case 3:
+                        Temp.GetComponent<SpriteRenderer>().color = Color.blue;
+                        Temp.GetComponent<BrickBehavior>().maxHits = 3;
+                        break;
+                    default:
+                        break;
+
+                }
+            }
+        }
     }
 }

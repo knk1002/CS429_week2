@@ -18,6 +18,7 @@ namespace Assets.Scripts.Stages
 			public BlockType blockType;
             public Vector2 point;
             public Vector2 size;
+            public int maxHit;
         }
 
         public List<BlockInfo> blockInfoList;

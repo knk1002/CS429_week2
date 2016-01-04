@@ -21,15 +21,17 @@ namespace Assets.Scripts.Stages
 
         public Stage getStage(int num)
         {
-            Stage stage;
-            string path = "Assets/Resources/Stages/" + num.ToString() + ".json";
             
+            string path = "Assets/Resources/Stages/" + num.ToString() + ".json";
+
+            Stage stage;
+
             using (StreamReader file = File.OpenText(path))
             {
                 stage = (Stage)serializer.Deserialize(file, typeof(Stage));
             }
 
-			UnityEngine.Debug.Log (stage.blockInfoList [0].blockType);
+			UnityEngine.Debug.Log (stage.blockInfoList.Count);
 
             return stage;
         }
