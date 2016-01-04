@@ -4,12 +4,12 @@ namespace Assets.Scripts.System
 {
 	public class GameBounds
 	{
-		public int leftBound;
-		public int rightBound;
-		public int upperBound;
-		public int lowerBound;
+		public float leftBound;
+		public float rightBound;
+		public float upperBound;
+		public float lowerBound;
 
-		public GameBounds(int left, int right, int up, int down) {
+		public GameBounds(float left, float right, float up, float down) {
 			leftBound = left;
 			rightBound = right;
 			upperBound = up;

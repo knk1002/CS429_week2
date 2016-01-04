@@ -20,10 +20,19 @@ namespace Assets.Scripts.System
 
         public void KeyUpdate(float deltaTime)
         {
-            if (Input.GetKey("left"))
-                MoveLeft(deltaTime);
-            else if (Input.GetKey("right"))
-                MoveRight(deltaTime);
+			Touch touch;
+			if (Input.touchCount > 0) {
+				touch = Input.touches [0];
+				if (touch.position.x <= Screen.width / 3)
+					MoveLeft (deltaTime);
+				else if (touch.position.x >= 2 * Screen.width / 3)
+					MoveRight (deltaTime);
+			} else {
+				if (Input.GetKey ("left"))
+					MoveLeft (deltaTime);
+				else if (Input.GetKey ("right"))
+					MoveRight (deltaTime);
+			}
         }
 
         public void MoveLeft(float deltaTime)

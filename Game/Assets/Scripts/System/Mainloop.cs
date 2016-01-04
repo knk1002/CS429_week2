@@ -33,15 +33,15 @@ namespace Assets.Scripts.System
         void Start()
         {
 			//Position the Objects
-			myCursor.transform.position.Set (0f, -2.75f, 0f);
-			opCursor.transform.position.Set (0f, 2.75f, 0f);
-			Ball.transform.position.Set (0f, -2f, 0f);
+			myCursor.transform.position.Set (0f, -2.2f, 0f);
+			opCursor.transform.position.Set (0f, 2.2f, 0f);
+			Ball.transform.position.Set (0f, -1.8f, 0f);
 
 			//Load Level
 			LoadLevel();
 
 			//Instantiate Game Logic
-			gameBounds = new GameBounds (-4, 4, 3, -3);
+			gameBounds = new GameBounds (-4f, 4f, 2.4f, -2.4f);
 			KeyboardInput = new KeyEvent(myCursor, gameBounds);
 			BallLogic = new BallEvent (Ball, gameBounds);
             stageParser = StageParser.Instance;
@@ -86,9 +86,9 @@ namespace Assets.Scripts.System
 
 		void LoadLevel() {
 			for (int x = 0; x < 12; x++) {
-				for (int y = 0; y < 8; y++) {
-					float xpos = (float)x / 2 - 3;
-					float ypos = (float)y / 4 - 1;
+				for (int y = 0; y < 4; y++) {
+					float xpos = (float)x / 2 - 3f;
+					float ypos = (float)y / 4 - 0.5f;
 					if (y % 2 == 0) {
 						Instantiate (brick, new Vector3 (xpos, ypos, 0), Quaternion.identity);
 					} else {
