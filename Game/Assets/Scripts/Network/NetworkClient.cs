@@ -42,6 +42,20 @@ public class NetworkClient {
         {
             Debug.Log("Message Send Failed");
         }
-
     }
+
+	public void SendLoad(int networkOrder)
+	{
+		SendtoServer(new NetworkMessage(NetworkMessage.MessageType.Load, new System.Object[0], networkOrder));
+	}
+
+	public void SendMoveStart(string dir, int networkOrder)
+	{
+		SendtoServer(new NetworkMessage(NetworkMessage.MessageType.MoveStart, new System.Object[1] {dir}, networkOrder));
+	}
+
+	public void SendMoveEnd(int networkOrder)
+	{
+		SendtoServer(new NetworkMessage(NetworkMessage.MessageType.MoveEnd, new System.Object[0], networkOrder));
+	}
 }

@@ -1,0 +1,25 @@
+서버 프로토콜 명세서
+
+PlayerOrder:
+클라이언트가 접속이 되었다면, 1p인지 2p인지 알려줍니다.
+Json : PlayerOrder/(1 or 2)/-1
+
+Connect :
+두 클라이언트가 모두 접속을 했다면 양클라이언트에게 메시지를 보냅니다.
+Json : Connect/Null/-1
+
+Load :
+Connect 메시지를 받은 클라이언트가 스테이지 로드가 완료 되면 서버에게 메시지를 보냅니다.
+Json : Load/Null/(1 or 2)
+
+Start :
+양 클라이언트가 모두 Load가 되면 양 클라이언트에게 Start 메시지를 보냅니다.
+Json : Start/Null/-1
+
+MoveStart:
+클라이언트가 서버에게 자신이 움직임을 시작했다고 알려줍니다. 서버는 그대로 다른 클라이언트에게 메시지를 넘겨줍니다.
+Json : MoveStart/(Left or Right)/(1 or 2)
+
+MoveEnd:
+클라이언트가 서버에게 자신이 움직임을 끝냈다고 알려줍니다. 서버는 그대로 다른 클라이언트에게 메시지를 넘겨줍니다.
+Json : MoveEnd/Null/(1 or 2)
