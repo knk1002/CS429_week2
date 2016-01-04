@@ -22,6 +22,7 @@ namespace Assets.Scripts.System
 		private GameBounds gameBounds;
         private KeyEvent KeyboardInput;
 		private BallEvent BallLogic;
+		private GameState gameState;
 
         private StageParser stageParser;
         private Stage nowStage;
@@ -44,6 +45,8 @@ namespace Assets.Scripts.System
 			gameBounds = new GameBounds (-4f, 4f, 2.4f, -2.4f);
 			KeyboardInput = new KeyEvent(myCursor, gameBounds);
 			BallLogic = new BallEvent (Ball, gameBounds);
+			gameState = GameState.Start;
+
             stageParser = StageParser.Instance;
             nowStage = stageParser.getStage(1);
         }
@@ -80,13 +83,21 @@ namespace Assets.Scripts.System
 
         void FixedUpdate()
         {
-            KeyboardInput.KeyUpdate(Time.deltaTime);
-			BallLogic.update (Time.deltaTime);
+			if (gameState == GameState.Start) {
+
+			} else if (gameState == GameState.Playing) {
+				KeyboardInput.KeyUpdate (Time.deltaTime);
+				BallLogic.update (Time.deltaTime);
+			} else if (gameState == GameState.GameOver) {
+
+			} else if (gameState == GameState.Paused) {
+
+			}
         }
 
 		void LoadLevel() {
 			for (int x = 0; x < 12; x++) {
-				for (int y = 0; y < 4; y++) {
+				for (int y = 0; y < 5; y++) {
 					float xpos = (float)x / 2 - 3f;
 					float ypos = (float)y / 4 - 0.5f;
 					if (y % 2 == 0) {
