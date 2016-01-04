@@ -5,7 +5,8 @@ import json
 import thread
 from time import ctime
 
-Host = '143.248.36.223'
+# Host = '143.248.36.223'
+Host = '127.0.0.1'
 Port = 2345
 Bufsize = 1024
 ADDR = (Host,Port)
@@ -17,33 +18,49 @@ class client_sock:
     def set_1P(self, client_socket1, num):
         self.first = client_socket1
         self.roomnumber = num
-    def add_player_pair(self):
-        pass
-    def set_2P(self,client_socket2,num):
+    def set_2P(self,client_socket2):
         self.second = client_socket2
-        self.add_player_pair()
+    def set_load_1P(self):
+        self.firstload = True
+    def set_load_2P(self):
+        self.secondload = True
 
 
-def ClientThread(clientsock,addr):
-    _data = ''
+def ClientThread(clientsock,addr,room_num,net_order):
     while True:
         data = clientsock.recv(Bufsize)
-        if _data == data:
-            break
-        else:
-            _data = data
-        print repr(addr) + ' ' + repr(data)
+        try:
+            client_socklist = player_pair_list[room_num]
+            if checktype(data) == "Move":
+                if net_order == 0:
+                    client_socklist.second.send(data)
+                else:
+                    client_socklist.first.send(data)
+            elif checktype(data) == "Load":
+                if net_order == 0:
+                    client_socklist.first.set_load_1P()
+                else:
+                    client_socklist.second.set.load_2P()
+                if client_socklist.firstload == True and client_socklist.secondload == True:
+                    client_socklist.first.send(_Serializer("Start",'',-1))
+                    client_socklist.second.send(_Serializer("Start",'',-1))
+            print "Data send to opponent successfully"
+        except error:
+            print "Data could not be sent"
     clientsock.close()
     print repr(addr) + ' ' + "end connection1\n"
 
-def _JSONread(datum):
-    js  = json.loads(datum)
+def checktype(msg):
+    js  = json.loads(msg)
     _Type = js['Type']
-    _NetworkOrder = js['NetworkOrder']
-    _Arguments = js['Arguments']
+    if (_Type == 'MoveStart') or (_Type == 'MoveEnd'):
+        return "Move"
+    elif (_Type == 'Load'):
+        return 'Load'
 
 
-
+def _Serializer(__type,arg, netorder):
+    return json.dumps (({"Type":__type,"Arguments":arg,"NetworkOrder":netorder}),indent=4,separators=(",",":"))
 
 if __name__ == '__main__':
     serverSocket = socket(AF_INET,SOCK_STREAM)
@@ -53,22 +70,23 @@ if __name__ == '__main__':
     serverSocket.listen(5)
 
     print("Server Start")
-    room_num = 0
+    room_num = 1
     while 1:
         print 'waiting for connection'
         for i in range(2):
             client_list = client_sock()
             clientsock, addr = serverSocket.accept()
-            print clientsock
             if i==0:
                 room_num += 1
                 client_list.set_1P(clientsock,room_num)
-                print "You are Player 1"
+                net_order = 0
+                clientsock.send(_Serializer("PlayerOrder",net_order,-1))
             else:
-                client_list.set_2P(clientsock,room_num)
+                client_list.set_2P(clientsock)
                 player_pair_list.append(client_list)
-                print "You are Player 2"
+                net_order = 1
+                clientsock.send(_Serializer("PlayerOrder",net_order,-1))
+                client_list.first.send(_Serializer("Connect",'',-1))
+                client_list.second.send(_Serializer("Connect",'',-1))
             print 'connected from' , addr
-            thread.start_new_thread(ClientThread, (clientsock, addr))
-            if i == 1:
-                print (player_pair_list[0])
+            thread.start_new_thread(ClientThread, (clientsock, addr,room_num,net_order))
