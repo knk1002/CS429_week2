@@ -23,4 +23,24 @@ public class NetworkMessage
         NetworkOrder = networkOrder;
         Arguments = arguments;
     }
+
+    public override string ToString()
+    {
+        try
+        {
+            string res = Type.ToString() + ": /";
+            for (int i = 0; i < Arguments.Length; i++)
+            {
+                res += Arguments[i].ToString() + "/";
+            }
+            res += NetworkOrder.ToString();
+            return res;
+        }
+        catch
+        {
+            Console.WriteLine("Json ToString Failed");
+            return "";
+        }
+
+    }
 }

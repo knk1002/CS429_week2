@@ -79,13 +79,13 @@ if __name__ == '__main__':
             if i==0:
                 room_num += 1
                 client_list.set_1P(clientsock,room_num)
-                net_order = 0
-                clientsock.send(_Serializer("PlayerOrder",net_order,-1))
+                net_order = 1
+                clientsock.send(_Serializer("PlayerOrder",[net_order],-1))
             else:
                 client_list.set_2P(clientsock)
                 player_pair_list.append(client_list)
-                net_order = 1
-                clientsock.send(_Serializer("PlayerOrder",net_order,-1))
+                net_order = 2
+                clientsock.send(_Serializer("PlayerOrder",[net_order],-1))
                 client_list.first.send(_Serializer("Connect",'',-1))
                 client_list.second.send(_Serializer("Connect",'',-1))
             print 'connected from' , addr
