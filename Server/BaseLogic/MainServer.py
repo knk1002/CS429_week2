@@ -24,6 +24,8 @@ class client_sock:
         self.roomnumber = 0
         self.firstload = False
         self.secondload = False
+        self.firstqueue = []
+        self.secondqueue = []
     def set_1P(self, client_socket1, num):
         self.first = client_socket1
         self.roomnumber = num
@@ -35,40 +37,53 @@ class client_sock:
         self.secondload = True
 
 
-def ClientThread(clientsock,addr,room_num,net_order):
-    isConnectSend = False
-    clientsock.setblocking(0)
+def recv_json(sock,room_num,net_order):
     while True:
-        do_read = True
-        if(not isConnectSend):
-            if(not(player_pair_list[room_num].first == None) and not(player_pair_list[room_num].second == None)):
-                if(net_order == 1):
-                    player_pair_list[room_num].first.send(_Serializer("Connect",[],-1))
-                else:
-                    player_pair_list[room_num].second.send(_Serializer("Connect",[],-1))
-                isConnectSend = True
         try:
             data = clientsock.recv(Bufsize)
             client_socklist = player_pair_list[room_num]
             if checktype(data) == "Move":
                 if net_order == 1:
-                    client_socklist.second.send(data)
+                    client_socklist.firstqueue.append([data,client_socklist.second])
                 else:
-                    client_socklist.first.send(data)
+                    client_socklist.secondqueue.append([data,client_socklist.first])
             elif checktype(data) == "Load":
                 if net_order == 1:
-                    client_socklist.first.set_load_1P()
+                    client_socklist.set_load_1P()
                 else:
-                    client_socklist.second.set.load_2P()
+                    client_socklist.set.load_2P()
                 if client_socklist.firstload == True and client_socklist.secondload == True:
-                    client_socklist.first.send(_Serializer("Start",'',-1))
-                    client_socklist.second.send(_Serializer("Start",'',-1))
+                    client_socklist.firstqueue.append([_Serializer("Start",'',-1),client_socklist.first])
+                    client_socklist.secondqueue.append([_Serializer("Start",'',-1),client_socklist.second])
             print "Data send to opponent successfully"
         except socket.error, e:
             pass
         time.sleep(0)
-    clientsock.close()
-    print repr(addr) + ' ' + "end connection1\n"
+
+def send_json(sock,room_num,net_order):
+    client_socklist = player_pair_list[room_num]
+    while True:
+        if(net_order == 1):
+            if(not client_socklist.firstqueue == []):
+                client_socklist.firstqueue[0][1].send(client_socklist.firstqueue[0][0])
+                del client_socklist.firstqueue[0]
+        else:
+            if(not client_socklist.secondqueue == []):
+                client_socklist.secondqueue[0][1].send(client_socklist.secondqueue[0][0])
+                del client_socklist.secondqueue[0]
+        time.sleep(0)
+
+
+
+def ClientThread(clientsock,addr,room_num,net_order):
+    thread.start_new_thread(recv_json,(clientsock,room_num,net_order))
+    thread.start_new_thread(send_json,(clientsock,room_num,net_order))
+
+    client_socklist = player_pair_list[room_num]
+
+    if(not(player_pair_list[room_num].first == None) and not(player_pair_list[room_num].second == None)):
+        client_socklist.firstqueue.append([_Serializer("Connect",[],-1),client_socklist.first])
+        client_socklist.secondqueue.append([_Serializer("Connect",[],-1),client_socklist.second])
 
 def checktype(msg):
     js  = json.loads(msg)
@@ -107,8 +122,5 @@ if __name__ == '__main__':
 
         clientsock.send(_Serializer("PlayerOrder",[net_order],-1))
         thread.start_new_thread(ClientThread, (clientsock, addr,room_num,net_order))
-        if(not(player_pair_list[room_num].first == None) and not(player_pair_list[room_num].second == None)):
-            player_pair_list[room_num].first.send(_Serializer("Connect",[],-1))
-            player_pair_list[room_num].second.send(_Serializer("Connect",[],-1))
         net_order += 1
 
