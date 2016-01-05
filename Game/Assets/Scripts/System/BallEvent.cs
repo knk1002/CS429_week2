@@ -13,6 +13,8 @@ namespace Assets.Scripts.System
 		float radius;
 		BallCollisionDetector ballCollisionDetector;
 
+		public bool outOfBounds;
+
 		public BallEvent (GameObject input, GameBounds gb)
 		{
 			ball = input;
@@ -22,6 +24,8 @@ namespace Assets.Scripts.System
 			velocityY = 3;
 			radius = ball.GetComponent<CircleCollider2D> ().radius;
 			ballCollisionDetector = ball.GetComponent<BallCollisionDetector> ();
+
+			outOfBounds = false;
 		}
 
 		public void update(float deltaTime) {
@@ -65,12 +69,12 @@ namespace Assets.Scripts.System
 			} else if (ball.transform.position.x + radius > gameBounds.rightBound
 			           && velocityX > 0) {
 				velocityX *= -1;
-			} else if (ball.transform.position.y - radius < gameBounds.lowerBound
+			} else if (ball.transform.position.y < gameBounds.lowerBound
 			           && velocityY < 0) {
-				velocityY *= -1;
-			} else if (ball.transform.position.y + radius > gameBounds.upperBound 
+				outOfBounds = true;
+			} else if (ball.transform.position.y > gameBounds.upperBound 
 				&& velocityY > 0) {
-				velocityY *= -1;
+				outOfBounds = true;
 			}
 
 			//Move the ball

@@ -23,12 +23,12 @@ namespace Assets.Scripts.System {
 				state = State.Cursor;
 				//Do Something
 
-				Debug.Log("Collision with Cursor!");
+				Debug.Log ("Collision with Cursor!");
 			} else if (col.gameObject.tag == "Brick") {
 				state = State.Brick;
 				//Do Something
 
-				Debug.Log("Collision with Brick!");
+				Debug.Log ("Collision with Brick!");
 			}
 			collider = col;
 		}
