@@ -53,6 +53,7 @@ namespace temp_network.Scripts
                 Console.WriteLine("Room" + herenumber_.ToString() + " 's Connect Message Send Failed");
                 return false;
             }
+            System.Threading.Thread.Sleep(50);
             try
             {
                 serializer.Serialize(SoW, stringMsg);
