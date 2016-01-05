@@ -13,8 +13,8 @@ public class NetworkClient {
     {
         try
         {
-            //Client_Socket = new TcpClient("143.248.36.223", 2345);
-            Client_Socket = new TcpClient("127.0.0.1", 2345);
+            Client_Socket = new TcpClient("143.248.36.221", 2345);
+            //Client_Socket = new TcpClient("127.0.0.1", 2345);
         }
         catch
         {
