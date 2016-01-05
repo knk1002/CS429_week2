@@ -2,37 +2,43 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class BrickBehavior : MonoBehaviour {
+namespace Assets.Scripts.System {
 
-	int numHits;
-	public int maxHits;
+	public class BrickBehavior : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		numHits = 0;
-	}
+		GameObject MainLoop;
+		int numHits;
+		public int maxHits;
+
+		// Use this for initialization
+		void Start () {
+			MainLoop = GameObject.Find ("Container");
+			numHits = 0;
+		}
 	
-	// Update is called once per frame
-	void Update () {
-		if (numHits >= maxHits) {
-			Die ();
+		// Update is called once per frame
+		void Update () {
+			if (numHits >= maxHits) {
+				Die ();
+			}
 		}
-	}
+			
+		public void Hit() {
+			numHits++;
+			if (maxHits - numHits == 1) {
+				GetComponent<SpriteRenderer> ().color = Color.red;
+			}
+			if (maxHits - numHits == 2) {
+				GetComponent<SpriteRenderer> ().color = Color.yellow;
+			}
+			if (maxHits - numHits == 3) {
+				GetComponent<SpriteRenderer> ().color = Color.blue;
+			}
+		}
 
-	public void Hit() {
-		numHits++;
-		if (maxHits - numHits == 1) {
-			GetComponent<SpriteRenderer> ().color = Color.red;
+		public void Die() {
+			MainLoop.GetComponent<Mainloop> ().numBricks = MainLoop.GetComponent<Mainloop> ().numBricks - 1;
+			Destroy (this.gameObject);
 		}
-		if (maxHits - numHits == 2) {
-			GetComponent<SpriteRenderer> ().color = Color.yellow;
-		}
-		if (maxHits - numHits == 3) {
-			GetComponent<SpriteRenderer> ().color = Color.blue;
-		}
-	}
-
-	public void Die() {
-		Destroy (this.gameObject);
 	}
 }

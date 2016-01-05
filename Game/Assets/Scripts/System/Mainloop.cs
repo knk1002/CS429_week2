@@ -31,6 +31,8 @@ namespace Assets.Scripts.System
         NetworkClient ClientConnect;
 
         bool isConnected;
+		int life;
+		public int numBricks;
 
         void Start()
         {
@@ -45,6 +47,7 @@ namespace Assets.Scripts.System
             gameBounds = new GameBounds(-4f, 4f, 2.4f, -2.4f);
             KeyboardInput = new KeyEvent(myCursor, gameBounds);
             BallLogic = new BallEvent(Ball, gameBounds);
+			life = 3;
 
             //Load Level
 			gameState = GameState.Start;
@@ -116,16 +119,23 @@ namespace Assets.Scripts.System
 			} else if (gameState == GameState.Playing) {
 				KeyboardInput.KeyUpdate (Time.deltaTime);
 				BallLogic.update (Time.deltaTime);
+				if (BallLogic.outOfBounds == true) {
+					life--;
+					myCursor.transform.position.Set (0f, -2.2f, 0f);
+					opCursor.transform.position.Set (0f, 2.2f, 0f);
+					Ball.transform.position.Set (0f, -1.8f, 0f);
+					BallLogic.outOfBounds = false;
+					if (life <= 0) {
+						gameState = GameState.GameOver;
+					}
+				}
 			} else if (gameState == GameState.GameOver) {
-
+				//Instantiate(GameOverSprite, Vector3.zero, Quaternion.identity);
 			} else if (gameState == GameState.Paused) {
 
+			} else if (gameState == GameState.Cleared) {
+				LoadLevel ();
 			}
-        }
-
-        void Update()
-        {
-            FixedUpdate();
         }
 
 		void LoadLevel() {
@@ -151,6 +161,7 @@ namespace Assets.Scripts.System
                         break;
 
                 }
+				numBricks++;
             }
             if(isConnected)
             {
