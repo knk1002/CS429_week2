@@ -19,6 +19,15 @@ namespace temp_network.Scripts
             {
                 serializer.Serialize(OtherWriter, stringMsg);
                 OtherWriter.Flush();
+                Console.WriteLine("Room" + herenumber_.ToString() + " 's Load Message Send Successed");
+            }
+            catch
+            {
+                Console.WriteLine("Room" + herenumber_.ToString() + " 's Load Message Send Failed");
+                return false;
+            }
+            try
+            {
                 serializer.Serialize(SoW, stringMsg);
                 SoW.Flush();
                 Console.WriteLine("Room" + herenumber_.ToString() + " 's Load Message Send Successed");
@@ -28,7 +37,6 @@ namespace temp_network.Scripts
                 Console.WriteLine("Room" + herenumber_.ToString() + " 's Load Message Send Failed");
                 return false;
             }
-
             return true;
         }
 
@@ -38,6 +46,16 @@ namespace temp_network.Scripts
             {
                 serializer.Serialize(OtherWriter, stringMsg);
                 OtherWriter.Flush();
+                Console.WriteLine("Room" + herenumber_.ToString() + " 's Connect Message Send Successed");
+            }
+            catch
+            {
+                Console.WriteLine("Room" + herenumber_.ToString() + " 's Connect Message Send Failed");
+                return false;
+            }
+            System.Threading.Thread.Sleep(50);
+            try
+            {
                 serializer.Serialize(SoW, stringMsg);
                 SoW.Flush();
                 Console.WriteLine("Room" + herenumber_.ToString() + " 's Connect Message Send Successed");
