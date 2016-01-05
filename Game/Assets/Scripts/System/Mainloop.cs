@@ -49,7 +49,7 @@ namespace Assets.Scripts.System
             networkOrder = -1;
 
 			//Instantiate Game Logic
-			gameBounds = new GameBounds(-3.2f, 3.2f, 2.4f, -2.4f);
+			gameBounds = new GameBounds(-3.8f, 3.8f, 2.4f, -2.4f);
 			KeyboardInput = new KeyEvent(myCursor, gameBounds);
 			BallLogic = new BallEvent(Ball, gameBounds);
 			life = 3;
