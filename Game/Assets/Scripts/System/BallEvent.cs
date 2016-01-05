@@ -60,7 +60,7 @@ namespace Assets.Scripts.System
                     Mainloop.ClientConnect.SendBallColide(order, ball.transform.position, new Vector2(velocityX, velocityY));
             } else if (ball.transform.position.y < gameBounds.lowerBound
 			           && velocityY < 0) {
-                if (order == 1)
+                if (order == 1 || isSinglePlayer)
                 {
                     outOfBounds = true;
                 }
@@ -130,7 +130,7 @@ namespace Assets.Scripts.System
 					velocityY = newVelocity.y;
 				}
 				*/
-            if(order == 1)
+            if(order == 1 || isSinglePlayer)
 			    col.gameObject.GetComponent<BrickBehavior>().Hit();
 		}
 	}

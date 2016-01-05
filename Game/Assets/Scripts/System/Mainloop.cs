@@ -214,7 +214,7 @@ namespace Assets.Scripts.System
 				KeyboardInput.KeyUpdate (Time.deltaTime);
 				BallLogic.update (Time.deltaTime);
 				if (BallLogic.outOfBounds == true) {
-                    if(networkOrder == 1)
+                    if(networkOrder == 1 || isSinglePlayer)
                     {
                         life--;
                         Reset();
@@ -226,7 +226,8 @@ namespace Assets.Scripts.System
                         else {
                             gameState = GameState.Playing;
                         }
-                        ClientConnect.SendDie(networkOrder);
+                        if(isConnected)
+                            ClientConnect.SendDie(networkOrder);
                     }
 				}
 				if (numBricks <= 0) {
