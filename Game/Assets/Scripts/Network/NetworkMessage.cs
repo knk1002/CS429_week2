@@ -29,10 +29,13 @@ public class NetworkMessage
         try
         {
             string res = Type.ToString() + ": /";
-            for (int i = 0; i < Arguments.Length; i++)
+            if(Arguments != null)
             {
-                res += Arguments[i].ToString() + "/";
-            }
+                for (int i = 0; i < Arguments.Length; i++)
+                {
+                    res += Arguments[i].ToString() + "/";
+                }
+            }            
             res += NetworkOrder.ToString();
             return res;
         }

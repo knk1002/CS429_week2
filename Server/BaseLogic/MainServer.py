@@ -84,6 +84,7 @@ def ClientThread(clientsock,addr,room_num,net_order):
 
     if(not(player_pair_list[room_num].first == None) and not(player_pair_list[room_num].second == None)):
         client_socklist.firstqueue.append([_Serializer("Connect",[],-1),client_socklist.first])
+        print "Yeah"
         client_socklist.secondqueue.append([_Serializer("Connect",[],-1),client_socklist.second])
 
 def checktype(msg):
