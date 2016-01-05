@@ -41,23 +41,24 @@ def recv_json(sock,room_num,net_order):
     while True:
         try:
             data = clientsock.recv(Bufsize)
-            client_socklist = player_pair_list[room_num]
-            if checktype(data) == "Move":
-                if net_order == 1:
-                    client_socklist.firstqueue.append([data,client_socklist.second])
-                else:
-                    client_socklist.secondqueue.append([data,client_socklist.first])
-            elif checktype(data) == "Load":
-                if net_order == 1:
-                    client_socklist.set_load_1P()
-                else:
-                    client_socklist.set.load_2P()
-                if client_socklist.firstload == True and client_socklist.secondload == True:
-                    client_socklist.firstqueue.append([_Serializer("Start",'',-1),client_socklist.first])
-                    client_socklist.secondqueue.append([_Serializer("Start",'',-1),client_socklist.second])
-            print "Data send to opponent successfully"
         except socket.error, e:
             pass
+        client_socklist = player_pair_list[room_num]
+        if checktype(data) == "Move":
+            if net_order == 1:
+                client_socklist.firstqueue.append([data,client_socklist.second])
+            else:
+                client_socklist.secondqueue.append([data,client_socklist.first])
+        elif checktype(data) == "Load":
+            if net_order == 1:
+                client_socklist.set_load_1P()
+            else:
+                client_socklist.set.load_2P()
+            if client_socklist.firstload == True and client_socklist.secondload == True:
+                client_socklist.firstqueue.append([_Serializer("Start",'',-1),client_socklist.first])
+                client_socklist.secondqueue.append([_Serializer("Start",'',-1),client_socklist.second])
+        print "Data send to opponent successfully"
+
         time.sleep(0)
 
 def send_json(sock,room_num,net_order):

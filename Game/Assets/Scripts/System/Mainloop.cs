@@ -65,6 +65,13 @@ namespace Assets.Scripts.System
             }
         }
 
+        public void StartButtonClick()
+        {
+            nowStage = stageParser.getStage(1);
+            LoadLevel();
+            gameState = GameState.Playing;
+        }
+
         IEnumerator Listen()
         {
             while (true)
