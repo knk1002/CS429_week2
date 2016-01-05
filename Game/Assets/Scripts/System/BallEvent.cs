@@ -13,6 +13,7 @@ namespace Assets.Scripts.System
 		float radius;
 		BallCollisionDetector ballCollisionDetector;
 
+		public bool isSinglePlayer;
 		public bool outOfBounds;
 
 		public BallEvent (GameObject input, GameBounds gb)
@@ -74,13 +75,21 @@ namespace Assets.Scripts.System
 				outOfBounds = true;
 			} else if (ball.transform.position.y > gameBounds.upperBound 
 				&& velocityY > 0) {
-				outOfBounds = true;
+				if (!isSinglePlayer) {
+					outOfBounds = true;
+				} else {
+					velocityY *= -1;
+				}
 			}
 
 			//Move the ball
 			ball.transform.Translate(velocityX * deltaTime, velocityY * deltaTime, 0f);
 		}
 
+		public void Reset() {
+			velocityX = 1;
+			velocityY = 3;
+		}
 	}
 }
 

@@ -17,4 +17,9 @@ public class ButtonEventManager : MonoBehaviour {
 		Debug.Log ("Loading MainScene");
 		Application.LoadLevel ("MainScene");
 	}
+
+	public void ExitButtonClick() {
+		Debug.Log ("Quitting...");
+		Application.Quit ();
+	}
 }

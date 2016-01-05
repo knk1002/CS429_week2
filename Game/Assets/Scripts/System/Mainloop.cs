@@ -16,9 +16,10 @@ namespace Assets.Scripts.System
 		public GameObject opCursor;
         public GameObject ConnectButton;
 		public GameObject Ball;
+		public GameObject ClearedSprite;
+		public GameObject GameOverSprite;
 
 		public GameObject brick;
-		public GameObject brick2;
 
 		private GameBounds gameBounds;
         private KeyEvent KeyboardInput;
@@ -33,21 +34,20 @@ namespace Assets.Scripts.System
         bool isConnected;
 		int life;
 		public int numBricks;
+		bool isSinglePlayer;
 
         void Start()
         {
             networkOrder = -1;
 
-			//Position the Objects
-			myCursor.transform.position.Set (0f, -2.2f, 0f);
-			opCursor.transform.position.Set (0f, 2.2f, 0f);
-			Ball.transform.position.Set (0f, -1.8f, 0f);
-
-            //Instantiate Game Logic
-            gameBounds = new GameBounds(-4f, 4f, 2.4f, -2.4f);
-            KeyboardInput = new KeyEvent(myCursor, gameBounds);
-            BallLogic = new BallEvent(Ball, gameBounds);
+			//Instantiate Game Logic
+			gameBounds = new GameBounds(-3.2f, 3.2f, 2.4f, -2.4f);
+			KeyboardInput = new KeyEvent(myCursor, gameBounds);
+			BallLogic = new BallEvent(Ball, gameBounds);
 			life = 3;
+
+			//Position the Objects
+			ResetPosition();
 
             //Load Level
 			gameState = GameState.Start;
@@ -59,6 +59,8 @@ namespace Assets.Scripts.System
         {
             ClientConnect = new NetworkClient();
             isConnected = ClientConnect.init();
+			isSinglePlayer = false;
+			BallLogic.isSinglePlayer = isSinglePlayer;
 
             if (isConnected)
             {
@@ -70,7 +72,11 @@ namespace Assets.Scripts.System
 
         public void StartButtonClick()
         {
-            nowStage = stageParser.getStage(1);
+			isSinglePlayer = true;
+			BallLogic.isSinglePlayer = isSinglePlayer;
+			opCursor.transform.position = new Vector3 (0f, 4f, 0f);
+
+			nowStage = stageParser.getStage(1);
             LoadLevel();
             gameState = GameState.Playing;
         }
@@ -114,27 +120,43 @@ namespace Assets.Scripts.System
 
         void FixedUpdate()
         {
+			//Game Loop
 			if (gameState == GameState.Start) {
 
 			} else if (gameState == GameState.Playing) {
 				KeyboardInput.KeyUpdate (Time.deltaTime);
 				BallLogic.update (Time.deltaTime);
 				if (BallLogic.outOfBounds == true) {
+					Debug.Log ("Out of Bounds!");
 					life--;
-					myCursor.transform.position.Set (0f, -2.2f, 0f);
-					opCursor.transform.position.Set (0f, 2.2f, 0f);
-					Ball.transform.position.Set (0f, -1.8f, 0f);
+					ResetPosition ();
 					BallLogic.outOfBounds = false;
 					if (life <= 0) {
 						gameState = GameState.GameOver;
+					} else {
+						gameState = GameState.Playing;
 					}
 				}
+				if (numBricks <= 0) {
+					gameState = GameState.Cleared;
+				}
 			} else if (gameState == GameState.GameOver) {
-				//Instantiate(GameOverSprite, Vector3.zero, Quaternion.identity);
+				Instantiate(GameOverSprite, Vector3.zero, Quaternion.identity);
+				Debug.Log("Game Over!");
+				gameState = GameState.Stopped;
 			} else if (gameState == GameState.Paused) {
-
+				
+				gameState = GameState.Playing;
 			} else if (gameState == GameState.Cleared) {
+				Instantiate(ClearedSprite, Vector3.zero, Quaternion.identity);
 				LoadLevel ();
+				ResetPosition ();
+				gameState = GameState.Playing;
+			}
+
+			//KeyPress for Escape
+			if (Input.GetKeyDown (KeyCode.Escape)) {
+				Application.LoadLevel ("MainMenu");
 			}
         }
 
@@ -168,5 +190,16 @@ namespace Assets.Scripts.System
                 ClientConnect.SendLoad(networkOrder);
             }
         }
+
+		void ResetPosition() {
+			myCursor.transform.position = new Vector3 (0f, -2.2f, 0f);
+			if (isSinglePlayer) {
+				opCursor.transform.position = new Vector3 (0f, 4f, 0f);
+			} else {
+				opCursor.transform.position = new Vector3 (0f, 2.2f, 0f);
+			}
+			Ball.transform.position = new Vector3 (0f, -1.8f, 0f);
+			BallLogic.Reset ();
+		}
     }
 }
