@@ -45,8 +45,10 @@ def recv_json(sock,room_num,net_order):
             client_socklist = player_pair_list[room_num]
             if checktype(data) == "Move":
                 if net_order == 1:
+                    print checktype(data)
                     client_socklist.firstqueue.append([data,client_socklist.second])
                 else:
+                    print checktype(data)
                     client_socklist.secondqueue.append([data,client_socklist.first])
             elif checktype(data) == "Load":
                 if net_order == 1:
