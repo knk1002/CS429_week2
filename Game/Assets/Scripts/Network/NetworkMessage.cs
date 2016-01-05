@@ -10,7 +10,10 @@ public class NetworkMessage
 		Load,
 		Start,
 		MoveStart,
-		MoveEnd
+		MoveEnd,
+        BallColide,
+        Die,
+        BrickColide
     }
 
     public int NetworkOrder;

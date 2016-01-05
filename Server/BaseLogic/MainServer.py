@@ -42,7 +42,6 @@ def recv_json(sock,room_num,net_order):
     try:
         while True:
             data = sock.recv(Bufsize)
-            print data
             client_socklist = player_pair_list[room_num]
             if checktype(data) == "Move":
                 if net_order == 1:
@@ -59,7 +58,22 @@ def recv_json(sock,room_num,net_order):
                 if client_socklist.firstload == True and client_socklist.secondload == True:
                     client_socklist.firstqueue.append([_Serializer(3,'',-1),client_socklist.first])
                     client_socklist.secondqueue.append([_Serializer(3,'',-1),client_socklist.second])
-            print "Data send to opponent successfully"
+            elif checktype(data) == "Colide":
+                if net_order == 1:
+                    client_socklist.firstqueue.append([data,client_socklist.second])
+                else:
+                    client_socklist.secondqueue.append([data,client_socklist.first])
+            elif checktype(data) == "Die":
+                if net_order == 1:
+                    client_socklist.firstqueue.append([data,client_socklist.second])
+                else:
+                    client_socklist.secondqueue.append([data,client_socklist.first])
+            elif checktype(data) == "Hit":
+                if net_order == 1:
+                    client_socklist.firstqueue.append([data,client_socklist.second])
+                else:
+                    client_socklist.secondqueue.append([data,client_socklist.first])
+            print data
             time.sleep(0)
     except socket.error, e:
         pass
@@ -77,7 +91,7 @@ def send_json(sock,room_num,net_order):
             if(not client_socklist.firstqueue == []):
                 client_socklist.firstqueue[0][1].send(client_socklist.firstqueue[0][0])
                 del client_socklist.firstqueue[0]
-        time.sleep(0)
+        time.sleep(0.05)
 
 
 
@@ -95,6 +109,12 @@ def checktype(msg):
         return "Move"
     elif (_Type == 2):
         return 'Load'
+    elif (_Type == 6):
+        return 'Colide'
+    elif (_Type == 7):
+        return 'Die'
+    elif (_Type == 8):
+        return 'Hit'
 
 
 def _Serializer(__type,arg, netorder):
@@ -120,14 +140,16 @@ if __name__ == '__main__':
         print 'connected from' , addr
         if(net_order == 1):
             player_pair_list[room_num].first = clientsock
+            clientsock.send(_Serializer(0,[1],-1))
         else:
             player_pair_list[room_num].second = clientsock
+            clientsock.send(_Serializer(0,[2],-1))
             client_socklist = player_pair_list[room_num]
-            if(not(player_pair_list[room_num].first == None) and not(player_pair_list[room_num].second == None)):
-                client_socklist.first.send(_Serializer(1,[],-1))
-                client_socklist.second.send(_Serializer(1,[],-1))
 
-        clientsock.send(_Serializer("PlayerOrder",[net_order],-1))
         thread.start_new_thread(ClientThread, (clientsock, addr,room_num,net_order))
+        if(not(player_pair_list[room_num].first == None) and not(player_pair_list[room_num].second == None)):
+                client_socklist.first.send(_Serializer(1,[],-1))
+                time.sleep(0.2)
+                client_socklist.second.send(_Serializer(1,[],-1))
         net_order += 1
 

@@ -8,10 +8,12 @@ namespace Assets.Scripts.System
 		GameObject ball;
 		GameBounds gameBounds;
 
-		float velocityX;
-		float velocityY;
+		public float velocityX;
+		public float velocityY;
+        public int order;
 		float radius;
 		BallCollisionDetector ballCollisionDetector;
+        bool changedState;
 
 		public bool isSinglePlayer;
 		public bool outOfBounds;
@@ -20,9 +22,11 @@ namespace Assets.Scripts.System
 		{
 			ball = input;
 			gameBounds = gb;
+            changedState = true;
 
 			velocityX = 1;
 			velocityY = 3;
+            order = -1;
 			radius = ball.GetComponent<CircleCollider2D> ().radius;
 			ballCollisionDetector = ball.GetComponent<BallCollisionDetector> ();
 
@@ -35,6 +39,8 @@ namespace Assets.Scripts.System
 			if (ballCollisionDetector.state == State.Cursor) { //Colliding with a Cursor
 				//Handle Cursor Collision
 				velocityY *= -1;
+                /*if(Mainloop.isConnected && order == 1)
+                    Mainloop.ClientConnect.SendBallColide(order, ball.transform.position, new Vector2(velocityX, velocityY));*/
 				//Reset State
 				ballCollisionDetector.state = State.None;
 			} else if (ballCollisionDetector.state == State.Brick) { // Colliding with a Brick
@@ -44,18 +50,30 @@ namespace Assets.Scripts.System
 			//Check for out of bounds
 			if (ball.transform.position.x - radius < gameBounds.leftBound
 			    && velocityX < 0) {
-				velocityX *= -1;
-			} else if (ball.transform.position.x + radius > gameBounds.rightBound
+                velocityX *= -1;
+                if (Mainloop.isConnected && order == 1)
+                    Mainloop.ClientConnect.SendBallColide(order, ball.transform.position, new Vector2(velocityX, velocityY));
+            } else if (ball.transform.position.x + radius > gameBounds.rightBound
 			           && velocityX > 0) {
-				velocityX *= -1;
-			} else if (ball.transform.position.y < gameBounds.lowerBound
+                velocityX *= -1;
+                if (Mainloop.isConnected && order == 1)
+                    Mainloop.ClientConnect.SendBallColide(order, ball.transform.position, new Vector2(velocityX, velocityY));
+            } else if (ball.transform.position.y < gameBounds.lowerBound
 			           && velocityY < 0) {
-				outOfBounds = true;
-			} else if (ball.transform.position.y > gameBounds.upperBound 
+                if (order == 1)
+                {
+                    outOfBounds = true;
+                }
+
+            } else if (ball.transform.position.y > gameBounds.upperBound 
 				&& velocityY > 0) {
-				if (!isSinglePlayer) {
-					outOfBounds = true;
-				} else {
+                if (!isSinglePlayer) {
+                    if(order == 1)
+                    {
+                        outOfBounds = true;
+                    }
+
+                } else {
 					velocityY *= -1;
 				}
 			}
@@ -65,8 +83,17 @@ namespace Assets.Scripts.System
 		}
 
 		public void Reset() {
-			velocityX = 1;
-			velocityY = 3;
+            if(order == 1)
+            {
+                velocityX = 1;
+                velocityY = 3;
+            }
+            else
+            {
+                velocityX = -1;
+                velocityY = -3;
+            }
+			
 		}
 
 		public void onBrickCollision(Collision2D col) {
@@ -78,15 +105,23 @@ namespace Assets.Scripts.System
 			if (angle >= 30 && angle <= 150) { // front or back
 				if (side.y > 0 && velocityY < 0) { //back
 					velocityY *= -1;
-				} else if (side.y < 0 && velocityY > 0) { //front
+                    if (Mainloop.isConnected && order == 1)
+                        Mainloop.ClientConnect.SendBallColide(order, ball.transform.position, new Vector2(velocityX, velocityY));
+                } else if (side.y < 0 && velocityY > 0) { //front
 					velocityY *= -1;
-				}
+                    if (Mainloop.isConnected && order == 1)
+                        Mainloop.ClientConnect.SendBallColide(order, ball.transform.position, new Vector2(velocityX, velocityY));
+                }
 
 			} else if (angle > 150 && velocityX > 0) { // left
 				velocityX *= -1;
-			} else if (angle < 30 && velocityX < 0) { //right
+                if (Mainloop.isConnected && order == 1)
+                    Mainloop.ClientConnect.SendBallColide(order, ball.transform.position, new Vector2(velocityX, velocityY));
+            } else if (angle < 30 && velocityX < 0) { //right
 				velocityX *= -1;
-			} 
+                if (Mainloop.isConnected && order == 1)
+                    Mainloop.ClientConnect.SendBallColide(order, ball.transform.position, new Vector2(velocityX, velocityY));
+            } 
 			/*
 				else {
 					Vector2 newVelocity = 
@@ -95,7 +130,8 @@ namespace Assets.Scripts.System
 					velocityY = newVelocity.y;
 				}
 				*/
-			col.gameObject.GetComponent<BrickBehavior>().Hit();
+            if(order == 1)
+			    col.gameObject.GetComponent<BrickBehavior>().Hit();
 		}
 	}
 }

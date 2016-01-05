@@ -7,6 +7,7 @@ namespace Assets.Scripts.System {
 	public class BrickBehavior : MonoBehaviour {
 
 		GameObject MainLoop;
+        public int num;
 		int numHits;
 		public int maxHits;
 
@@ -35,6 +36,11 @@ namespace Assets.Scripts.System {
 			if (numHits >= maxHits) {
 				Die ();
 			}
+            if(Assets.Scripts.System.Mainloop.isConnected)
+            {
+                if (Assets.Scripts.System.Mainloop.networkOrder == 1)
+                    Assets.Scripts.System.Mainloop.ClientConnect.SendBrickColide(1, Assets.Scripts.System.Mainloop.totalNumBricks - num - 1);
+            }
 		}
 
 		public void Die() {

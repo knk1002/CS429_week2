@@ -3,51 +3,45 @@
   [
     {
       "blockType" : "0", 
-      "point" : {"x":"-3","y":"-0.5"}, 
+      "point" : {"x":"-2.5","y":"-0.5"}, 
       "size" : {"x":"30","y":"30"},
 	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
-      "point" : {"x":"-2.5","y":"-0.5"}, 
-      "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
-    },
-	  {
-      "blockType" : "0", 
       "point" : {"x":"-2","y":"-0.5"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "3"
+	    "maxHit" : "1"
     },
-  	{
+	  {
       "blockType" : "0", 
       "point" : {"x":"-1.5","y":"-0.5"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	    "maxHit" : "1"
     },
-	  {
+  	{
       "blockType" : "0", 
       "point" : {"x":"-1","y":"-0.5"}, 
       "size" : {"x":"30","y":"30"},
-	  "maxHit" : "1"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
       "point" : {"x":"-0.5","y":"-0.5"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	  "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
-      "point" : {"x":"-0","y":"-0.5"}, 
+      "point" : {"x":"0","y":"-0.5"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "3"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
       "point" : {"x":"0.5","y":"-0.5"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
@@ -59,67 +53,61 @@
       "blockType" : "0", 
       "point" : {"x":"1.5","y":"-0.5"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
       "point" : {"x":"2","y":"-0.5"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "3"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
       "point" : {"x":"2.5","y":"-0.5"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	    "maxHit" : "1"
     },
 	{
       "blockType" : "0", 
-      "point" : {"x":"-3","y":"-0.25"}, 
+      "point" : {"x":"-2.5","y":"-0.25"}, 
       "size" : {"x":"30","y":"30"},
 	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
-      "point" : {"x":"-2.5","y":"-0.25"}, 
-      "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
-    },
-	  {
-      "blockType" : "0", 
       "point" : {"x":"-2","y":"-0.25"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "3"
+	    "maxHit" : "1"
     },
-  	{
+	  {
       "blockType" : "0", 
       "point" : {"x":"-1.5","y":"-0.25"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	    "maxHit" : "1"
     },
-	  {
+  	{
       "blockType" : "0", 
       "point" : {"x":"-1","y":"-0.25"}, 
       "size" : {"x":"30","y":"30"},
-	  "maxHit" : "1"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
       "point" : {"x":"-0.5","y":"-0.25"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	  "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
-      "point" : {"x":"-0","y":"-0.25"}, 
+      "point" : {"x":"0","y":"-0.25"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "3"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
       "point" : {"x":"0.5","y":"-0.25"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
@@ -131,67 +119,61 @@
       "blockType" : "0", 
       "point" : {"x":"1.5","y":"-0.25"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
       "point" : {"x":"2","y":"-0.25"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "3"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
       "point" : {"x":"2.5","y":"-0.25"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	    "maxHit" : "1"
     },
 	{
       "blockType" : "0", 
-      "point" : {"x":"-3","y":"0"}, 
+      "point" : {"x":"-2.5","y":"0"}, 
       "size" : {"x":"30","y":"30"},
 	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
-      "point" : {"x":"-2.5","y":"0"}, 
-      "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
-    },
-	  {
-      "blockType" : "0", 
       "point" : {"x":"-2","y":"0"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "3"
+	    "maxHit" : "1"
     },
-  	{
+	  {
       "blockType" : "0", 
       "point" : {"x":"-1.5","y":"0"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	    "maxHit" : "1"
     },
-	  {
+  	{
       "blockType" : "0", 
       "point" : {"x":"-1","y":"0"}, 
       "size" : {"x":"30","y":"30"},
-	  "maxHit" : "1"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
       "point" : {"x":"-0.5","y":"0"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	  "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
-      "point" : {"x":"-0","y":"0"}, 
+      "point" : {"x":"0","y":"0"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "3"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
       "point" : {"x":"0.5","y":"0"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
@@ -203,67 +185,61 @@
       "blockType" : "0", 
       "point" : {"x":"1.5","y":"0"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
       "point" : {"x":"2","y":"0"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "3"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
       "point" : {"x":"2.5","y":"0"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	    "maxHit" : "1"
     },
 	{
       "blockType" : "0", 
-      "point" : {"x":"-3","y":"0.25"}, 
+      "point" : {"x":"-2.5","y":"0.25"}, 
       "size" : {"x":"30","y":"30"},
 	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
-      "point" : {"x":"-2.5","y":"0.25"}, 
-      "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
-    },
-	  {
-      "blockType" : "0", 
       "point" : {"x":"-2","y":"0.25"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "3"
+	    "maxHit" : "1"
     },
-  	{
+	  {
       "blockType" : "0", 
       "point" : {"x":"-1.5","y":"0.25"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	    "maxHit" : "1"
     },
-	  {
+  	{
       "blockType" : "0", 
       "point" : {"x":"-1","y":"0.25"}, 
       "size" : {"x":"30","y":"30"},
-	  "maxHit" : "1"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
       "point" : {"x":"-0.5","y":"0.25"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	  "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
-      "point" : {"x":"-0","y":"0.25"}, 
+      "point" : {"x":"0","y":"0.25"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "3"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
       "point" : {"x":"0.5","y":"0.25"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
@@ -275,13 +251,13 @@
       "blockType" : "0", 
       "point" : {"x":"1.5","y":"0.25"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "2"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
       "point" : {"x":"2","y":"0.25"}, 
       "size" : {"x":"30","y":"30"},
-	    "maxHit" : "3"
+	    "maxHit" : "1"
     },
 	  {
       "blockType" : "0", 
