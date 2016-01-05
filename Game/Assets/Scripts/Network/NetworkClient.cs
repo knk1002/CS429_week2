@@ -13,8 +13,8 @@ public class NetworkClient {
     {
         try
         {
-            Client_Socket = new TcpClient("143.248.36.221", 2345);
-            //Client_Socket = new TcpClient("127.0.0.1", 2345);
+            //Client_Socket = new TcpClient("143.248.36.221", 2345);
+            Client_Socket = new TcpClient("127.0.0.1", 2345);
         }
         catch
         {
@@ -48,6 +48,7 @@ public class NetworkClient {
 	public void SendLoad(int networkOrder)
 	{
 		SendtoServer(new NetworkMessage(NetworkMessage.MessageType.Load, new System.Object[0], networkOrder));
+        Debug.Log("Yeah");
 	}
 
 	public void SendMoveStart(string dir, int networkOrder)

@@ -7,8 +7,8 @@ import socket
 import time
 from time import ctime
 
-Host = '143.248.225.132'
-#Host = '127.0.0.1'
+#Host = '143.248.36.223'
+Host = '127.0.0.1'
 Port = 2345
 Bufsize = 1024
 ADDR = (Host,Port)
@@ -42,13 +42,12 @@ def recv_json(sock,room_num,net_order):
     try:
         while True:
             data = sock.recv(Bufsize)
+            print data
             client_socklist = player_pair_list[room_num]
             if checktype(data) == "Move":
                 if net_order == 1:
-                    print checktype(data)
                     client_socklist.firstqueue.append([data,client_socklist.second])
                 else:
-                    print checktype(data)
                     client_socklist.secondqueue.append([data,client_socklist.first])
             elif checktype(data) == "Load":
                 if net_order == 1:
@@ -58,8 +57,8 @@ def recv_json(sock,room_num,net_order):
                 else:
                     client_socklist.set_load_2P()
                 if client_socklist.firstload == True and client_socklist.secondload == True:
-                    client_socklist.first.send(_Serializer(3,'',-1))
-                    client_socklist.second.send(_Serializer(3,'',-1))
+                    client_socklist.firstqueue.append([_Serializer(3,'',-1),client_socklist.first])
+                    client_socklist.secondqueue.append([_Serializer(3,'',-1),client_socklist.second])
             print "Data send to opponent successfully"
             time.sleep(0)
     except socket.error, e:
