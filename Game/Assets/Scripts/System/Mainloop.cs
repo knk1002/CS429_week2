@@ -15,6 +15,7 @@ namespace Assets.Scripts.System
         public GameObject myCursor;
 		public GameObject opCursor;
         public GameObject ConnectButton;
+		public GameObject StartButton;
 		public GameObject Ball;
 		public GameObject ClearedSprite;
 		public GameObject GameOverSprite;
@@ -47,7 +48,7 @@ namespace Assets.Scripts.System
 			life = 3;
 
 			//Position the Objects
-			ResetPosition();
+			Reset();
 
             //Load Level
 			gameState = GameState.Start;
@@ -61,6 +62,7 @@ namespace Assets.Scripts.System
             isConnected = ClientConnect.init();
 			isSinglePlayer = false;
 			BallLogic.isSinglePlayer = isSinglePlayer;
+			ClearBricks ();
 
             if (isConnected)
             {
@@ -68,16 +70,21 @@ namespace Assets.Scripts.System
                 StartCoroutine(Listen());
                 Debug.Log("Waiting for opponent");
             }
+
         }
 
         public void StartButtonClick()
         {
 			isSinglePlayer = true;
 			BallLogic.isSinglePlayer = isSinglePlayer;
-			opCursor.transform.position = new Vector3 (0f, 4f, 0f);
+			life = 3;
+			Reset ();
+			ClearBricks ();
 
 			nowStage = stageParser.getStage(1);
             LoadLevel();
+			ConnectButton.SetActive(false);
+			StartButton.SetActive (false);
             gameState = GameState.Playing;
         }
 
@@ -129,7 +136,7 @@ namespace Assets.Scripts.System
 				if (BallLogic.outOfBounds == true) {
 					Debug.Log ("Out of Bounds!");
 					life--;
-					ResetPosition ();
+					Reset ();
 					BallLogic.outOfBounds = false;
 					if (life <= 0) {
 						gameState = GameState.GameOver;
@@ -143,15 +150,23 @@ namespace Assets.Scripts.System
 			} else if (gameState == GameState.GameOver) {
 				Instantiate(GameOverSprite, Vector3.zero, Quaternion.identity);
 				Debug.Log("Game Over!");
+				ConnectButton.SetActive (true);
+				StartButton.SetActive (true);
 				gameState = GameState.Stopped;
 			} else if (gameState == GameState.Paused) {
-				
+				//Pause();
 				gameState = GameState.Playing;
 			} else if (gameState == GameState.Cleared) {
 				Instantiate(ClearedSprite, Vector3.zero, Quaternion.identity);
+				/*
 				LoadLevel ();
-				ResetPosition ();
+				Reset ();
 				gameState = GameState.Playing;
+				*/
+				Debug.Log("Cleared!");
+				ConnectButton.SetActive (true);
+				StartButton.SetActive (true);
+				gameState = GameState.Stopped;
 			}
 
 			//KeyPress for Escape
@@ -191,7 +206,7 @@ namespace Assets.Scripts.System
             }
         }
 
-		void ResetPosition() {
+		void Reset() {
 			myCursor.transform.position = new Vector3 (0f, -2.2f, 0f);
 			if (isSinglePlayer) {
 				opCursor.transform.position = new Vector3 (0f, 4f, 0f);
@@ -200,6 +215,13 @@ namespace Assets.Scripts.System
 			}
 			Ball.transform.position = new Vector3 (0f, -1.8f, 0f);
 			BallLogic.Reset ();
+		}
+
+		void ClearBricks() {
+			GameObject[] bricks = GameObject.FindGameObjectsWithTag ("Brick");
+			foreach (GameObject brick in bricks) {
+				Destroy (brick);
+			}
 		}
     }
 }
