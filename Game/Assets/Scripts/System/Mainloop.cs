@@ -23,8 +23,8 @@ namespace Assets.Scripts.System
 		public GameObject brick;
 
 		private GameBounds gameBounds;
-        private KeyEvent KeyboardInput;
-		private BallEvent BallLogic;
+		public KeyEvent KeyboardInput;
+		public BallEvent BallLogic;
 		private GameState gameState;
 
         private StageParser stageParser;
@@ -37,7 +37,7 @@ namespace Assets.Scripts.System
 		public int numBricks;
 		bool isSinglePlayer;
 
-        void Start()
+        void Awake()
         {
             networkOrder = -1;
 

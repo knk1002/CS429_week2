@@ -38,29 +38,7 @@ namespace Assets.Scripts.System
 				//Reset State
 				ballCollisionDetector.state = State.None;
 			} else if (ballCollisionDetector.state == State.Brick) { // Colliding with a Brick
-				//Handle Brick Collision
-				GameObject brick = ballCollisionDetector.collider.gameObject;
-				Vector2 side = ballCollisionDetector.collider.contacts [0].normal;
-				float angle = Vector2.Angle (side, Vector2.right);
-				//Debug.Log (angle);
-				if (angle >= 45 && angle <= 135) { // front or back
-					velocityY *= -1;
-				} else if (angle > 135) { // left
-					velocityX *= -1;
-				} else if (angle < 45) { //right
-					velocityX *= -1;
-				} 
-				/*
-				else {
-					Vector2 newVelocity = 
-						Vector2.Reflect (new Vector2 (velocityX, velocityY), side.normalized);
-					velocityX = newVelocity.x;
-					velocityY = newVelocity.y;
-				}
-				*/
-				brick.GetComponent<BrickBehavior>().Hit();
-				//Reset State
-				ballCollisionDetector.state = State.None;
+				
 			}
 
 			//Check for out of bounds
@@ -89,6 +67,35 @@ namespace Assets.Scripts.System
 		public void Reset() {
 			velocityX = 1;
 			velocityY = 3;
+		}
+
+		public void onBrickCollision(Collision2D col) {
+			//Handle Brick Collision
+			Vector2 side = col.contacts [0].normal;
+			float angle = Vector2.Angle (side, Vector2.right);
+			Debug.Log (side);
+			Debug.Log (angle);
+			if (angle >= 30 && angle <= 150) { // front or back
+				if (side.y > 0 && velocityY < 0) { //back
+					velocityY *= -1;
+				} else if (side.y < 0 && velocityY > 0) { //front
+					velocityY *= -1;
+				}
+
+			} else if (angle > 150 && velocityX > 0) { // left
+				velocityX *= -1;
+			} else if (angle < 30 && velocityX < 0) { //right
+				velocityX *= -1;
+			} 
+			/*
+				else {
+					Vector2 newVelocity = 
+						Vector2.Reflect (new Vector2 (velocityX, velocityY), side.normalized);
+					velocityX = newVelocity.x;
+					velocityY = newVelocity.y;
+				}
+				*/
+			col.gameObject.GetComponent<BrickBehavior>().Hit();
 		}
 	}
 }

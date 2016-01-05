@@ -18,9 +18,7 @@ namespace Assets.Scripts.System {
 	
 		// Update is called once per frame
 		void Update () {
-			if (numHits >= maxHits) {
-				Die ();
-			}
+			
 		}
 			
 		public void Hit() {
@@ -33,6 +31,9 @@ namespace Assets.Scripts.System {
 			}
 			if (maxHits - numHits == 3) {
 				GetComponent<SpriteRenderer> ().color = Color.blue;
+			}
+			if (numHits >= maxHits) {
+				Die ();
 			}
 		}
 

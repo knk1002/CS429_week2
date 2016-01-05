@@ -7,10 +7,13 @@ namespace Assets.Scripts.System {
 
 		public State state;
 		public Collision2D collider;
+		public GameObject ball;
+		BallEvent BallLogic;
 
 		// Use this for initialization
 		void Start () {
 			state = State.None;
+			BallLogic = ball.GetComponent<Mainloop> ().BallLogic;
 		}
 	
 		// Update is called once per frame
@@ -27,7 +30,7 @@ namespace Assets.Scripts.System {
 			} else if (col.gameObject.tag == "Brick") {
 				state = State.Brick;
 				//Do Something
-
+				BallLogic.onBrickCollision(col);
 				Debug.Log ("Collision with Brick!");
 			}
 			collider = col;
